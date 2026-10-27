@@ -69,32 +69,34 @@ class Program {
       Console.WriteLine (aes2.Operations (15, 10));
       Arithmetics aes3 = new MulArithmetics ();
       Console.WriteLine (aes3.Operations (15, 10));
+      /*
+            //Interface
+            IPayment ip1 = new Teach ();
+            Console.WriteLine (ip1.Payments ());
+            //the method doesnot now the identity of objects but knows only the behaviour.
 
-      //Interface
-      IPayment ip1 = new Teach ();
-      Console.WriteLine (ip1.Payments ());
-      //the method doesnot now the identity of objects but knows only the behaviour.
-
-      School se1 = new Studet ();
-      School te1 = new Teach ();
-      Process (se1);
-      Process (te1);
-      void Process (School sl) {
-         if (sl is Studet s) {
-            s.Request ();
-         } else if (sl is Teach t) {
-            t.Approve ();
+            School se1 = new Studet ();
+            School te1 = new Teach ();
+            Process (se1);
+            Process (te1);
+            void Process (School sl) {
+               if (sl is Studet s) {
+                  s.Request ();
+               } else if (sl is Teach t) {
+                  t.Approve ();
+               }
+            }
+            IPayment ip1 = new Teach ();
+            StartPayment (ip1);
+            IPayment ip2 = new Infra ();
+            StartPayment (ip2);
+            IPayment ip3 = new Electrician ();
+            StartPayment (ip3);
+            void StartPayment (IPayment staff) => staff.Payments ();
          }
-      }
-      IPayment ip1 = new Teach ();
-      StartPayment (ip1);
-      IPayment ip2 = new Infra ();
-      StartPayment (ip2);
-      IPayment ip3 = new Electrician ();
-      StartPayment (ip3);
-      void StartPayment (IPayment staff) => staff.Payments ();
-   }
-   interface IPayment {
-      void Payments ();
+         interface IPayment {
+            void Payments ();
+         }
+      */
    }
 }

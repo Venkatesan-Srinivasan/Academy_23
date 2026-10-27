@@ -5,10 +5,9 @@
   <Project Path="L04/L04.csproj" />
   <Project Path="L05/L05.csproj" />
   <Project Path="L06/L06.csproj" />
-  <Project Path="L06/T06/T06.csproj" />
+  <Project Path="T06/T06.csproj" />
   <Project Path="L07/L07.csproj" />
-  <Project Path="L07/P01/P01.csproj" />
+  <Project Path="P01/P01.csproj" />
   <Project Path="L08/L08.csproj" />
   <Project Path="L09/L09.csproj" />
-  <Project Path="L10/L10.csproj" />
 </Solution>
