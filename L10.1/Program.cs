@@ -12,7 +12,7 @@
 
 namespace L10._1;
 
-using static State;
+using static EState;
 
 #region class Program -----------------------------------------------------------------------------
 class Program {
@@ -33,13 +33,17 @@ class Program {
          @"N:\DOWNLOADS\CACHE.jpg"
       };
       foreach (var item in fileNames) {
-         var result = FileParse (item);
-         Console.WriteLine (result);
+         (string drive, string directory, string fileName, string extension) = FileParse (item);
+         Console.WriteLine ($"[ Drive: {drive}, Directory: {directory}," +
+            $" Filename: {fileName}, Extension: {extension} ]");
       }
    }
-   public static (string drive, string directory, string filename, string extension) FileParse
+
+   #region Implementations ------------------------------------------
+   // See file://
+   static (string drive, string directory, string filename, string extension) FileParse
       (string input) {
-      State s = A;
+      EState s = A;
       Action toDo;
       Action none = () => { };
       bool isDirectoryNotEmpty = false;
@@ -50,8 +54,11 @@ class Program {
             (B, ':') => (C, none),
             (C, '\\') => (D, none),
             (D or E, >= 'A' and <= 'Z') => (E, () => fileName += ch),
-            (E, '\\') => (D, () => { directory += directory.Length > 0 ? "-" + fileName : fileName;
-               isDirectoryNotEmpty = true; fileName = ""; }),
+            (E, '\\') => (D, () => {
+               directory += directory.Length > 0 ? "-" + fileName : fileName;
+               isDirectoryNotEmpty = true; fileName = "";
+            }
+            ),
             (E, '.') => (F, none),
             (F or G, >= 'A' and <= 'Z') => (G, () => extension += ch),
             (G, '~') => (H, none),
@@ -60,9 +67,12 @@ class Program {
          toDo ();
       }
       if (s == H && isDirectoryNotEmpty) return (drive, directory, fileName, extension);
-      return ("", "", "", "");
+      return ("-", "-", "-", "-");
    }
+   #endregion
 }
 #endregion
 
-enum State { A, B, C, D, E, F, G, H, Z }
+#region enum EState -------------------------------------------------------------------------------
+enum EState { A, B, C, D, E, F, G, H, Z }
+#endregion
