@@ -1,5 +1,6 @@
 <Solution>
   <Project Path="L01/L01.csproj" />
+  <Project Path="L02.2/L02.2.csproj" />
   <Project Path="L02/L02.csproj" />
   <Project Path="L03/L03.csproj" />
   <Project Path="L04/L04.csproj" />
