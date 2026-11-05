@@ -4,8 +4,18 @@ using System.Text;
 
 namespace L10._2;
 
-class TDeque<T> {
+#region class TDeque ------------------------------------------------------------------------------
+public class TDeque<T> {
 
+   #region Properties -----------------------------------------------
+   /// <summary>Get the number of items</summary>
+   public int Count { get; set; }
+   /// <summary>Check if the deque is empty</summary>
+   public bool IsEmpty => Count == 0;
+   #endregion
+
+   #region Methods --------------------------------------------------
+   /// <summary>Remove the first item</summary>
    public T DequeueFront () {
       if (IsEmpty) throw new Exception ("Queue empty");
       T value = mData[mHead];
@@ -15,6 +25,7 @@ class TDeque<T> {
       return value;
    }
 
+   /// <summary>Remove the last item</summary>
    public T DequeueRear () {
       if (IsEmpty) throw new Exception ("Queue empty");
       mTail = (mTail - 1 + mData.Length) % mData.Length;
@@ -23,31 +34,41 @@ class TDeque<T> {
       Count--;
       return value;
    }
+
+   /// <summary>Add an item at front to the deque</summary>
    public void EnqueueFront (T a) {
       if (Count == mData.Length) Resize ();
       mHead = (mHead - 1 + mData.Length) % mData.Length;
       mData[mHead] = a;
       Count++;
    }
+
+   /// <summary>Add an item at rear to the deque</summary>
    public void EnqueueRear (T a) {
       if (Count == mData.Length) Resize ();
       mData[mTail] = a;
       mTail = (mTail + 1) % mData.Length;
       Count++;
-
    }
+
+   /// <summary>Get the first item added to deque</summary>
    public T PeekFront () {
       if (IsEmpty) throw new Exception ("Queue os empty");
       T value = DequeueFront ();
       EnqueueFront (value);
       return value;
    }
+   /// <summary>Get the last item added to deque</summary>
    public T PeekRear () {
       if (IsEmpty) throw new Exception ("Queue os empty");
       T value = DequeueRear ();
       EnqueueRear (value);
       return value;
    }
+   #endregion
+
+   #region Implementation -------------------------------------------
+   /// <summary>Increase the queue capacity when full</summary>
    void Resize () {
       T[] newData = new T[Count * 2];
       int firstPart = mData.Length - mHead;
@@ -57,10 +78,13 @@ class TDeque<T> {
       mHead = 0;
       mTail = Count;
    }
+   #endregion
 
-   public bool IsEmpty => Count == 0;
-   public int Count { get; set; }
-   T[] mData = new T[4];
+   #region Private --------------------------------------------------
+   T[] mData = new T[CAPACITY];
    int mHead;
    int mTail;
+   const int CAPACITY = 4;
+   #endregion
 }
+#endregion
