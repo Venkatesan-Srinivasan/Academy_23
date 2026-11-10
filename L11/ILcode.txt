@@ -1,0 +1,30 @@
+mscorlib: it pocntains basic classes and types that are fundamnetal to the .NET framework,
+such as System.Object, System.String and System.Int32.
+It provides essential functionality for building .NET applications, including collections, file I/O, threading, and more.
+
+
+Assembly code --> Assembler --> machine code for IL processor
+
+IL assembler reads this assembly code and translates it into machine code that can be executed by the .NET runtime.
+The .assembly extern directive indicates that the assembly being referenced is external to the current assembly,
+allowing the code to utilize the types and members defined in mscorlib.
+human readable textual
+
+
+Abstract of machine code theoritical processor (IL) then for any particular processor such as x86, ARM, or x64,
+the IL code is further compiled into native machine code by the Just-In-Time (JIT) compiler at runtime.
+This allows .NET applications to run on different hardware architectures while maintaining a consistent programming model.
+
+libraries.dll and executables.exe are examples of assemblies that can be created using IL code.
+These assemblies can be referenced by other .NET applications, enabling code reuse and modularity.
+
+.assembly extern mscorlib { }          //Microsoft core library, fundamental to .NET framework
+.assembly Test{ }                      //
+.method static void Test(string[] args){
+   .entrypoint
+   ldstr "Hello"                       //load string
+   ldc.i4 10                           //load constant: 32 bit integer.
+   ldc.i4 15
+   add
+   ret
+}
