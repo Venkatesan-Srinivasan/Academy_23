@@ -1,4 +1,5 @@
-﻿using System.IO.MemoryMappedFiles;
+﻿using System.ComponentModel.DataAnnotations;
+using System.IO.MemoryMappedFiles;
 
 namespace L12;
 
@@ -10,6 +11,21 @@ class Program {
       d1.Shapes.Add (new Rectangle (new Point (4, 5), 6, 7));
       d1.Shapes.Add (new Circle (new Point (12, 14), 3.5));
 
+      var sw = new SWriter ("C:\\Users\\srinivasanve\\source\\repos\\Academy_23\\L12\\test.dg");
+      d1.Save (sw);
+      sw.Close ();
+      var sr = new SReader ("C:\\Users\\srinivasanve\\source\\repos\\Academy_23\\L12\\test.dg");
+      var d2 = new Drawing ();
+      d2.Load (sr);
+      sr.Close ();
+
+      Display d = new Display ();
+      d1.Draw (d);
+      Console.WriteLine ();
+      d2.Draw (d);
+
+      /*
+       *
       Circle c = new Circle (new (3, 5), 5); //same type\
       Shape s1 = c;  //circle reference to shape. and s1 to the circle object. upcast
       Point pos = s1.Position; //get position of shape.
@@ -33,75 +49,7 @@ class Program {
 
       if (s1 is Circle { Radius: < 0 } c1) {
          c1.Radius = 0; // if s1 is a circle with radius less than 0, then c1 is a circle reference to the same circle object. otherwise, c1 is null.
-      }
+      }*/
 
    }
-}
-
-public readonly struct Point {
-   public Point (double x, double y) => (X, Y) = (x, y);
-   public override string ToString () => $"({X}, {Y})";
-   public readonly double X, Y;
-}
-class Shape {
-   public Shape (Point position) => Position = position;
-   public Point Position { get; set; }
-
-}
-class Circle : Shape {
-   public Circle (Point position, double radius) : base (position) => Radius = radius;
-   public double Radius { get; set; }
-}
-
-class Rectangle : Shape {
-   public Rectangle (Point position, double width, double height) : base (position) => (Width, Height) = (width, height);
-   public double Width { get; set; }
-   public double Height { get; set; }
-}
-class RoundRecatngle : Rectangle {
-   public RoundRecatngle (Point position, double width, double height) : base (position, width, height) { }
-}
-
-class Drawing {
-   public Drawing (string name) { Name = name; Shapes = new (); }
-   public string Name { get; set; }
-   public List<Shape> Shapes { get; }
-}
-
-
-abstract class Storable {
-   public abstract void Save (SWriter w);
-   public abstract void Load (SReader r);
-}
-
-class SWriter {
-   public SWriter (string name) {
-      if (File.Exists (name))
-         File.Delete (name);
-      mFile = new StreamWriter (name);
-   }
-   public SWriter Put (string s) {
-      mFile.WriteLine (s);
-      return this;
-   }
-   public SWriter Put (double d) {
-      mFile.WriteLine (d);
-      return this;
-   }
-   public SWriter Put (int i) {
-      mFile.WriteLine (i);
-      return this;
-   }
-
-   StreamWriter mFile;
-}
-
-class SReader {
-   public SReader (string name) {
-      mFile = new StreamReader (name);
-   }
-   public string GetString () => mFile.ReadLine ();
-   public double GetDouble () => double.Parse (mFile.ReadLine ());
-   public int GetInt () => int.Parse (mFile.ReadLine ());
-   StreamReader mFile;
 }
