@@ -5,21 +5,21 @@ namespace L12;
 
 class Program {
    static void Main () {
-      Drawing d1 = new ("Drawing1");
-      d1.Name = "Another Drawing of 1";
+      var d1 = new Drawing ("Drawing1");
       d1.Shapes.Add (new Circle (new Point (1, 2), 3));
       d1.Shapes.Add (new Rectangle (new Point (4, 5), 6, 7));
       d1.Shapes.Add (new Circle (new Point (12, 14), 3.5));
 
-      var sw = new SWriter ("C:\\Users\\srinivasanve\\source\\repos\\Academy_23\\L12\\test.dg");
-      d1.Save (sw);
-      sw.Close ();
+      using (var sw = new SWriter ("C:\\Users\\srinivasanve\\source\\repos\\Academy_23\\L12\\test.dg")) {
+         d1.Save (sw);
+         sw.Dispose ();
+      } //guarantess the exception safety. if an exception is thrown, the file is closed and disposed of properly.
       var sr = new SReader ("C:\\Users\\srinivasanve\\source\\repos\\Academy_23\\L12\\test.dg");
-      var d2 = new Drawing ();
+      var d2 = new Drawing { Name = string.Empty };
       d2.Load (sr);
-      sr.Close ();
+      sr.Dispose ();
 
-      Display d = new Display ();
+      var d = new Display ();
       d1.Draw (d);
       Console.WriteLine ();
       d2.Draw (d);
